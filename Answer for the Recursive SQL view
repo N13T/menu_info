@@ -1,0 +1,19 @@
+"create VIEW final_parents as
+WITH RECURSIVE cte AS ( 
+   SELECT id, 
+          id_name, 
+          id_name as final_parent_name 
+   FROM t1
+  where parent_id=0
+
+   UNION ALL 
+
+   SELECT t1.id,
+          t1.id_name,
+          cte.final_parent_name
+   FROM t1
+      join cte ON cte.id = t1.parent_id
+)
+SELECT *
+FROM cte
+order by 2"
